@@ -33,32 +33,18 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 6.0.x
-          cache: true
-          cache-dependency-path: '**/packages.lock.json'
 
       - name: Restore dependencies
         run: dotnet restore Database.sln
 
       - name: Verify formatting
-        run: >
-          dotnet format Database.sln
-          --verify-no-changes
-          --no-restore
+        run: dotnet format Database.sln --verify-no-changes --no-restore
 
       - name: Build solution
-        run: >
-          dotnet build Database.sln
-          --configuration ${{ env.CONFIGURATION }}
-          --no-restore
+        run: dotnet build Database.sln --configuration ${{ env.CONFIGURATION }} --no-restore
 
       - name: Run tests
-        run: >
-          dotnet test Database.sln
-          --configuration ${{ env.CONFIGURATION }}
-          --no-build
-          --no-restore
-          --logger "trx;LogFileName=test-results.trx"
-          --results-directory TestResults
+        run: dotnet test Database.sln --configuration ${{ env.CONFIGURATION }} --no-build --no-restore --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
 
       - name: Upload test results
         if: always()
