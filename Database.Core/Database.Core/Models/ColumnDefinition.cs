@@ -1,25 +1,36 @@
-﻿using System;
+
 using Database.Core.Enums;
 
-namespace Database.Core.Models;
-
-public sealed class ColumnDefinition
+namespace Database.Core.Models
 {
-    public string Name { get; }
-    public ColumnType Type { get; }
-    public string? DefaultValue { get; }
-
-    public ColumnDefinition(
-        string name,
-        ColumnType type,
-        string? defaultValue = null)
+    public sealed class ColumnDefinition
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException(
-                "Column name is required.");
+        public string Name { get; }
 
-        Name = name;
-        Type = type;
-        DefaultValue = defaultValue;
+        public ColumnType Type { get; }
+
+        public string? DefaultValue { get; }
+
+        public ColumnDefinition(
+            string name,
+            ColumnType type,
+            string? defaultValue = null)
+        {
+            ValidateName(name);
+
+            Name = name;
+            Type = type;
+            DefaultValue = defaultValue;
+        }
+
+        private static void ValidateName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException(
+                    "Column name cannot be empty.",
+                    nameof(name));
+            }
+        }
     }
 }

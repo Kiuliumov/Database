@@ -1,8 +1,9 @@
-﻿namespace Database.Core.Enums;
-
-public enum ColumnType
+namespace Database.Core.Enums
 {
-    Int,
-    String,
-    Date
+    public enum ColumnType
+    {
+        Int,
+        String,
+        Date
+    }
 }
